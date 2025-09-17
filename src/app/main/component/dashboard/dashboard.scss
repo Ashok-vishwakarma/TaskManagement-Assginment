@@ -1,0 +1,45 @@
+.d-parent {
+    // position: relative;
+    // height: 100%;
+    // width: 100%;
+}
+
+.t-parent {
+    // position: absolute;
+    top: 80px;
+    // width: 100%;
+    // height: 70%;
+}
+
+.header-h {
+    height: 30%;
+    background-color: #436b72;
+    color: #fff;
+    font-size: larger;
+    font-weight: 500;
+}
+
+
+.t-action {
+    // cursor: pointer;
+    // display: inline-block;
+    // padding: 5px 10px;
+    // background: #eee;
+}
+
+.f-error {
+    color: rgb(247, 43, 43);
+    font-size: small;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+}
+
+:host ::ng-deep .form-select-lg {
+    font-size: .9rem !important;
+}
+
+.f-btn {
+    display: flex;
+    align-items: end;
+}

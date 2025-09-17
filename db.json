@@ -1,0 +1,182 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "Setup Project",
+      "description": "Initialize Angular workspace and install dependencies",
+      "priority": "High",
+      "status": "Pending",
+      "taskIcon": "project"
+    },
+    {
+      "id": "2",
+      "title": "Login Page",
+      "description": "Create responsive login page with validation",
+      "priority": "Medium",
+      "status": "In Progress",
+      "taskIcon": "login"
+    },
+    {
+      "id": "3",
+      "title": "User Service",
+      "description": "Implement CRUD operations for users",
+      "priority": "High",
+      "status": "Completed",
+      "taskIcon": "user"
+    },
+    {
+      "id": "4",
+      "title": "Dashboard UI",
+      "description": "Design main dashboard layout",
+      "priority": "Low",
+      "status": "Pending",
+      "taskIcon": "dashboard"
+    },
+    {
+      "id": "5",
+      "title": "Task List",
+      "description": "Display tasks using PrimeNG datatable",
+      "priority": "Medium",
+      "status": "In Progress",
+      "taskIcon": "list"
+    },
+    {
+      "id": "6",
+      "title": "Add Task",
+      "description": "Create form to add new tasks",
+      "priority": "High",
+      "status": "Pending",
+      "taskIcon": "add"
+    },
+    {
+      "id": "7",
+      "title": "Edit Task",
+      "description": "Allow users to update task details",
+      "priority": "Medium",
+      "status": "Pending",
+      "taskIcon": "edit"
+    },
+    {
+      "id": "8",
+      "title": "Delete Task",
+      "description": "Enable deletion of tasks with confirmation",
+      "priority": "Low",
+      "status": "Completed",
+      "taskIcon": "delete"
+    },
+    {
+      "id": "9",
+      "title": "Profile Page",
+      "description": "User profile view and edit functionality",
+      "priority": "Medium",
+      "status": "In Progress",
+      "taskIcon": "profile"
+    },
+    {
+      "id": "10",
+      "title": "Search Feature",
+      "description": "Implement search with debounce in datatable",
+      "priority": "High",
+      "status": "Pending",
+      "taskIcon": "search"
+    },
+    {
+      "id": "11",
+      "title": "Notifications",
+      "description": "Show real-time notifications for tasks",
+      "priority": "Low",
+      "status": "Pending",
+      "taskIcon": "bell"
+    },
+    {
+      "id": "12",
+      "title": "Settings",
+      "description": "Create settings page for preferences",
+      "priority": "Medium",
+      "status": "Completed",
+      "taskIcon": "settings"
+    },
+    {
+      "id": "13",
+      "title": "Dark Mode",
+      "description": "Enable dark mode toggle",
+      "priority": "Low",
+      "status": "Pending",
+      "taskIcon": "moon"
+    },
+    {
+      "id": "14",
+      "title": "Reports",
+      "description": "Generate task completion reports",
+      "priority": "High",
+      "status": "In Progress",
+      "taskIcon": "report"
+    },
+    {
+      "id": "15",
+      "title": "Export Data",
+      "description": "Export tasks to CSV and PDF",
+      "priority": "Medium",
+      "status": "Pending",
+      "taskIcon": "export"
+    },
+    {
+      "id": "16",
+      "title": "Team Management",
+      "description": "Assign tasks to team members",
+      "priority": "High",
+      "status": "Completed",
+      "taskIcon": "team"
+    },
+    {
+      "id": "17",
+      "title": "Comments",
+      "description": "Add comments to tasks",
+      "priority": "Low",
+      "status": "Pending",
+      "taskIcon": "comment"
+    },
+    {
+      "id": "18",
+      "title": "File Upload",
+      "description": "Attach files to tasks",
+      "priority": "Medium",
+      "status": "In Progress",
+      "taskIcon": "upload"
+    },
+    {
+      "id": "19",
+      "title": "Email Integration",
+      "description": "Send email updates for task changes",
+      "priority": "High",
+      "status": "Pending",
+      "taskIcon": "email"
+    },
+    {
+      "id": "20",
+      "title": "Final Testing",
+      "description": "Perform end-to-end testing before release",
+      "priority": "High",
+      "status": "Pending",
+      "taskIcon": "test"
+    },
+    {
+      "id": "c886",
+      "title": "redrg",
+      "description": "ycycy",
+      "priority": "High",
+      "status": "Pending",
+      "taskImage": null,
+      "date": "2025-09-24"
+    },
+    {
+      "id": "ed47",
+      "title": "kjsbdfh",
+      "description": "idbi",
+      "priority": "High",
+      "status": "Pending",
+      "taskImage": null,
+      "date": "2025-09-17"
+    }
+  ]
+}
