@@ -24,7 +24,6 @@ export class CustomerData {
 
   // for post the data
   addTask(param: any): Observable<any> {
-    debugger
     return this.https.post<any>(this.apiUrl, param);
   }
 
