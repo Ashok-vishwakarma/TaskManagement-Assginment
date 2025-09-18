@@ -1,1 +1,83 @@
-<p>edit works!</p>
+<div class="container mt-4">
+    <h3 class="mb-3">Edit Task</h3>
+    <hr>
+    <form [formGroup]="editTask" (ngSubmit)="updateUserTask()" class="row g-3">
+
+        <!-- Title -->
+        <div class="col-12 col-md-6">
+            <label for="title" class="form-label fs-6">Title<span class="text-danger">*</span></label>
+            <input id="title" type="text" class="form-control" formControlName="title" />
+            <div class="text-danger mt-1"
+                *ngIf="editTask.get('title')?.touched && editTask.get('title')?.hasError('required')">
+                Title is required
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-12">
+            <label for="description" class="form-label fs-6">Description<span class="text-danger">*</span></label>
+            <textarea id="description" rows="3" class="form-control" formControlName="description"></textarea>
+            <div class="text-danger mt-1"
+                *ngIf="editTask.get('description')?.touched && editTask.get('description')?.hasError('required')">
+                Description is required
+            </div>
+        </div>
+
+        <!-- Priority -->
+        <div class="col-12 col-md-4">
+            <label for="priority" class="form-label fs-6">Priority<span class="text-danger">*</span></label>
+            <select id="priority" class="form-select form-select-lg" formControlName="priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+
+            <div class="text-danger mt-1"
+                *ngIf="editTask.get('priority')?.touched && editTask.get('priority')?.hasError('required')">
+                Priority is required
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="col-12 col-md-4">
+            <label for="status" class="form-label fs-6">Status<span class="text-danger">*</span></label>
+            <select id="status" class="form-select form-select-lg" formControlName="status">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+
+            <div class="text-danger mt-1"
+                *ngIf="editTask.get('status')?.touched && editTask.get('status')?.hasError('required')">
+                Status is required
+            </div>
+        </div>
+
+        <!-- Date -->
+        <div class="col-12 col-md-4">
+            <label for="date" class="form-label fs-6">Date<span class="text-danger">*</span></label>
+            <input id="date" type="date" class="form-control" formControlName="date" />
+            <div class="text-danger mt-1"
+                *ngIf="editTask.get('date')?.touched && editTask.get('date')?.hasError('required')">
+                Date is required
+            </div>
+        </div>
+
+        <!-- Task Image -->
+        <div class="col-12 col-md-6">
+            <label for="taskImage" class="form-label fs-6">Task Image<span class="text-danger">*</span></label>
+            <input id="taskImage" type="file" class="form-control" (change)="onFileChange($event)" />
+        </div>
+
+        <!--[disabled]="taskForm.invalid"-->
+        <div class="col-12 d-flex justify-content-end">
+            <button class="btn btn-primary backbtn" type="button" (click)="backtoDashboard()">
+                Back
+            </button>
+
+            <button class="btn btn-success" type="submit">
+                Update
+            </button>
+        </div>
+    </form>
+</div>

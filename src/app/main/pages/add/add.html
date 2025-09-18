@@ -1,5 +1,6 @@
 <div class="container mt-4">
-    <h3 class="mb-3">Add Task</h3><hr>
+    <h3 class="mb-3">{{pageTitle}} Task</h3>
+    <hr>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="row g-3">
 
         <!-- Title -->
@@ -29,7 +30,7 @@
             <label for="status" class="form-label fs-6">Status<span class="text-danger">*</span></label>
             <select id="status" class="form-select form-select-lg" formControlName="status">
                 <option value="Pending">Pending</option>
-                <option value="In-Progress">In Progress</option>
+                <option value="In Progress">In Progress</option>
                 <option value="Completed">Completed</option>
             </select>
         </div>
@@ -46,14 +47,21 @@
             <input id="taskImage" type="file" class="form-control" (change)="onFileChange($event)" />
         </div>
 
-        <!-- Submit Button -->
+        <!--[disabled]="taskForm.invalid"-->
         <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-primary backbtn" type="submit" [disabled]="taskForm.invalid">
+            <button class="btn btn-primary backbtn" type="button" (click)="backtoDashboard()">
                 Back
             </button>
-            <button class="btn btn-primary" type="submit">
+
+            @if (pageTitle === 'Add') {
+            <button class="btn btn-primary" type="submit" [disabled]="taskForm.invalid">
                 Submit
             </button>
+            } @else if (pageTitle === 'Edit') {
+            <button class="btn btn-success" type="button" [disabled]="taskForm.invalid" (click)="updateUserTask()">
+                Update
+            </button>
+            }
         </div>
     </form>
 </div>

@@ -6,34 +6,43 @@
         <div class="col-12 p-0 m-0">
             <div class="">
                 <div class="container-fluid">
-                    <form [formGroup]="filterCustomer" (ngSubmit)="submitCustomerFilterForm()">
-                        <div class="row g-3 align-items-end mb-4">
+                    <div>
+                        <form [formGroup]="filterCustomer" (ngSubmit)="filterCustomerFilterForm()">
+                            <div class="row g-3 align-items-end mb-4">
 
-                            <div class="col-12 col-md-4">
-                                <label for="priority" class="form-label fs-6">Priority</label>
-                                <select id="priority" class="form-select form-select-lg" formControlName="priority">
-                                    <option value="High">High</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="priority" class="form-label fs-6">Priority</label>
+                                    <select id="priority" class="form-select form-select-lg" formControlName="priority">
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-4">
-                                <label for="status" class="form-label fs-6">Status</label>
-                                <select id="status" class="form-select form-select-lg" formControlName="status">
-                                    <option value="Pending">Pending</option>
-                                    <option value="In-Progress">In Progress</option>
-                                    <option value="Completed">Completed</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-4">
+                                    <label for="status" class="form-label fs-6">Status</label>
+                                    <select id="status" class="form-select form-select-lg" formControlName="status">
+                                        <option value="Pending">Pending</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-4 text-md-start">
-                                <p-button type="submit" label="Filter" variant="text" [raised]="true" severity="info"
-                                    class="w-100 w-md-auto">
-                                </p-button>
+                                <div class="col-12 col-md-2 text-center w-auto">
+                                    <p-button type="submit" label="Filter" variant="text" [raised]="true"
+                                        severity="info" class="w-100 w-md-auto">
+                                    </p-button>
+                                </div>
+
+                                <div class="col-12 col-md-2 text-center w-auto">
+
+                                    <p-button label="Add" type="button" variant="text" [raised]="true" severity="info"
+                                        class="w-md-auto" (click)="customerTaskManagement('Add' , false , '')">
+                                    </p-button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                     <div class="f-error">{{ errorMessage }}</div>
                 </div>
 
@@ -45,13 +54,13 @@
         <div class="col-12 da-tables">
             <div style="background-color: brown; height:100%;">
                 <div class="card">
-                    <p-table #dt1 [value]="customers" dataKey="id" [rows]="5" [rowsPerPageOptions]="[10, 25, 50]"
+                    <p-table #dt1 [value]="customers" dataKey="id" [rows]="5" [rowsPerPageOptions]="[10, 15, 20]"
                         [loading]="loading" [paginator]="true"
                         [globalFilterFields]="['id', 'title', 'description', 'priority' , 'status']" showGridlines>
                         <ng-template #caption>
-                            <div class="flex">
-                                <!-- <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" /> -->
-                                <p-iconfield iconPosition="left" class="ml-auto">
+                            <div
+                                class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+                                <p-iconfield iconPosition="left" class="w-100 w-md-auto">
                                     <p-inputicon>
                                         <i class="pi pi-search"></i>
                                     </p-inputicon>
@@ -61,6 +70,7 @@
                                 </p-iconfield>
                             </div>
                         </ng-template>
+
                         <ng-template #header>
                             <tr>
                                 <th style="min-width:5rem">
@@ -123,15 +133,16 @@
                                     {{ customer.status}}
                                 </td>
                                 <td>
-                                    <span class="t-action" (click)="CustomerData('View')">
+                                    <span class="t-action"
+                                        (click)="customerTaskManagement('View' , true , customer.id)">
                                         <!-- <p-button icon="pi-eye" severity="info" /> -->
                                         view
                                     </span>
-                                    <span class="t-action" (click)="CustomerData('Edit')">
+                                    <span class="t-action" (click)="editTaskManagement(customer.id)">
                                         <!-- <p-button icon="pi-file-edit" severity="warn" /> -->
                                         edit
                                     </span>
-                                    <span class="t-action" (click)="deletData()">
+                                    <span class="t-action" (click)="conformationDialog(customer.id)">
                                         <!-- <p-button icon="pi pi-times" [rounded]="true" severity="danger" /> -->
                                         delete
                                     </span>
