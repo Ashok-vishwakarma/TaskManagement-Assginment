@@ -19,7 +19,8 @@ export class Add {
   taskForm!: FormGroup
   pageTitle!: string
   userId: any;
-  isDisableFeild: any
+  isDisableFeild: any;
+  previewUrl: string | ArrayBuffer | null = null;
 
   constructor(private fb: FormBuilder, private cds: CustomerData, private activateRoute: ActivatedRoute, private router: Router) {
     this.activateRoute.queryParams.subscribe((res: any) => {
@@ -32,7 +33,6 @@ export class Add {
       title: ['', Validators.required],
       description: ['', Validators.required],
       priority: ['', Validators.required],
-      status: ['', Validators.required],
       taskImage: [null],
       date: ['', Validators.required]
     });
@@ -40,14 +40,39 @@ export class Add {
 
 
   onFileChange(event: any) {
+    debugger
     const file = event.target.files[0];
+
     if (file) {
-      this.taskForm.patchValue({ taskImage: file });
+
+      if (!file.type.startsWith('image/')) {
+        alert('Only image files are allowed!');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+        this.taskForm.patchValue({ taskImage: this.previewUrl });
+      };
+
+      reader.readAsDataURL(file);
+
     }
   }
 
+
+
+
+
   onSubmit() {
     debugger
+    if (this.taskForm.invalid) {
+      this.taskForm.markAllAsTouched();
+      return;
+
+    }
+
     if (this.taskForm.valid) {
       console.log('Task Form Data:', this.taskForm.value);
       // alert('Task Submitted Successfully!');
@@ -55,6 +80,7 @@ export class Add {
         console.log(res)
         if (res) {
           this.taskForm.reset();
+          this.router.navigate(['dashboard']);
           Swal.fire({
             icon: "success",
             title: "Task ",
@@ -76,11 +102,11 @@ export class Add {
       })
 
     }
+
   }
 
 
   backtoDashboard() {
-
     if (this.hasFormValues()) {
       Swal.fire({
         title: "Are you sure, you want to go Back",
@@ -98,7 +124,6 @@ export class Add {
     } else {
       this.router.navigate(['dashboard']);
     }
-
   }
 
   hasFormValues(): boolean {
@@ -106,25 +131,6 @@ export class Add {
       const value = this.taskForm.get(key)?.value;
       return value !== null && value !== '';
     });
-  }
-
-
-
-
-
-  updateUserTask() {
-
-    if (!this.taskForm.valid) {
-      return
-    }
-
-    this.cds.updateTask(this.userId, this.taskForm.value).subscribe((res: any) => {
-      if (res) {
-        this.router.navigate(['/dashboard'])
-        Swal.fire(`Record updated against the ID-${this.userId}`);
-      }
-    })
-
   }
 
 }

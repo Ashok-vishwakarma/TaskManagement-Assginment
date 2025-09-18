@@ -33,11 +33,16 @@
                                         severity="info" class="w-100 w-md-auto">
                                     </p-button>
                                 </div>
+                                <div class="col-12 col-md-2 text-center w-auto">
+                                    <p-button label="Clear" type="button" variant="text" [raised]="true" severity="info"
+                                        class="w-md-auto" (click)="clear()">
+                                    </p-button>
+                                </div>
 
                                 <div class="col-12 col-md-2 text-center w-auto">
 
                                     <p-button label="Add" type="button" variant="text" [raised]="true" severity="info"
-                                        class="w-md-auto" (click)="customerTaskManagement('Add' , false , '')">
+                                        class="w-md-auto" (click)="customerTaskManagement('Add')">
                                     </p-button>
                                 </div>
                             </div>
@@ -55,8 +60,7 @@
             <div style="background-color: brown; height:100%;">
                 <div class="card">
                     <p-table #dt1 [value]="customers" dataKey="id" [rows]="5" [rowsPerPageOptions]="[10, 15, 20]"
-                        [loading]="loading" [paginator]="true"
-                        [globalFilterFields]="['id', 'title', 'description', 'priority' , 'status']" showGridlines>
+                        [loading]="loading" [paginator]="true" [globalFilterFields]="['title']" showGridlines>
                         <ng-template #caption>
                             <div
                                 class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
@@ -64,8 +68,7 @@
                                     <p-inputicon>
                                         <i class="pi pi-search"></i>
                                     </p-inputicon>
-                                    <input pInputText type="text"
-                                        (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                    <input pInputText type="text" (input)="onCustomSearch($event)"
                                         placeholder="Search keyword" />
                                 </p-iconfield>
                             </div>
@@ -104,6 +107,15 @@
                                         <p-columnFilter type="text" field="status" display="menu" />
                                     </div>
                                 </th>
+
+                                <th style="min-width:10rem">
+                                    <div class="flex items-center justify-between">
+                                        Date
+                                        <p-columnFilter type="text" field="status" display="menu" />
+                                    </div>
+                                </th>
+
+
                                 <th style="min-width:10rem">
                                     <div class="flex items-center justify-between">
                                         Action
@@ -126,41 +138,39 @@
                                         <span>{{ customer.description }}</span>
                                     </div>
                                 </td>
-                                <td>
+
+                                <td [ngClass]="getPriorityClass(customer.priority)">
                                     {{ customer.priority}}
                                 </td>
-                                <td>
-                                    {{ customer.status}}
+                                <td [ngClass]="getStatusClass(customer.status)">
+                                    {{ customer.status ? customer.status :"-"}}
                                 </td>
+
                                 <td>
-                                    <span class="t-action"
+                                    <div class="flex items-center gap-2" [ngClass]="customer.date | highlightOverDUE">
+                                        <span>{{ customer.date}}</span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <!-- <span class="t-action"
                                         (click)="customerTaskManagement('View' , true , customer.id)">
-                                        <!-- <p-button icon="pi-eye" severity="info" /> -->
+                                        <p-button icon="pi-eye" severity="info" /> 
                                         view
-                                    </span>
+                                    </span> -->
                                     <span class="t-action" (click)="editTaskManagement(customer.id)">
-                                        <!-- <p-button icon="pi-file-edit" severity="warn" /> -->
-                                        edit
+                                        <p-button label="Edit" severity="warn" />
                                     </span>
                                     <span class="t-action" (click)="conformationDialog(customer.id)">
-                                        <!-- <p-button icon="pi pi-times" [rounded]="true" severity="danger" /> -->
-                                        delete
+                                        <p-button label="Delete" severity="danger" />
                                     </span>
                                 </td>
-                                <!-- <td>
-                                    <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)" />
-                                </td> -->
 
-                                <!-- <td class="text-center">
-                                    <i class="pi" [ngClass]="{
-                            'text-green-500 pi-check-circle': customer.verified,
-                            'text-red-500 pi-times-circle': !customer.verified}"></i>
-                                </td> -->
                             </tr>
                         </ng-template>
                         <ng-template #emptymessage>
                             <tr>
-                                <td colspan="7">No customers found.</td>
+                                <td colspan="7">No Task found.</td>
                             </tr>
                         </ng-template>
                     </p-table>

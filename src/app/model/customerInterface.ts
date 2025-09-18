@@ -4,4 +4,7 @@ export interface Customer {
     description?: string;
     priority?: string;
     status?: string;
+    taskIcon?: any;
+    date?: Date;
 }
+

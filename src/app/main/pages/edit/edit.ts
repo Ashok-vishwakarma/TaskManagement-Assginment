@@ -18,6 +18,7 @@ export class Edit implements OnInit {
 
   editTask!: FormGroup
   userId: any;
+  previewUrl: any;
 
   constructor(private fb: FormBuilder, private cds: CustomerData, private activateRoute: ActivatedRoute, private router: Router) {
 
@@ -94,7 +95,9 @@ export class Edit implements OnInit {
     this.cds.getTaskById(this.userId).subscribe((res: any) => {
       const userDate = res
       this.editTask.patchValue(res)
+      this.previewUrl = res.taskImage;
     })
+
   }
 
 }

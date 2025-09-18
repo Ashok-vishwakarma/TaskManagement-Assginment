@@ -3,19 +3,28 @@
     <hr>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="row g-3">
 
-        <!-- Title -->
+
         <div class="col-12 col-md-6">
             <label for="title" class="form-label fs-6">Title<span class="text-danger">*</span></label>
             <input id="title" type="text" class="form-control" formControlName="title" />
+
+            <div class="text-danger mt-1"
+                *ngIf="taskForm.get('title')?.touched && taskForm.get('title')?.hasError('required')">
+                Title is required
+            </div>
         </div>
 
-        <!-- Description -->
         <div class="col-12">
             <label for="description" class="form-label fs-6">Description<span class="text-danger">*</span></label>
             <textarea id="description" rows="3" class="form-control" formControlName="description"></textarea>
+
+            <div class="text-danger mt-1"
+                *ngIf="taskForm.get('description')?.touched && taskForm.get('description')?.hasError('required')">
+                Description is required
+            </div>
         </div>
 
-        <!-- Priority -->
+
         <div class="col-12 col-md-4">
             <label for="priority" class="form-label fs-6">Priority<span class="text-danger">*</span></label>
             <select id="priority" class="form-select form-select-lg" formControlName="priority">
@@ -23,27 +32,42 @@
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
             </select>
+
+            <div class="text-danger mt-1"
+                *ngIf="taskForm.get('priority')?.touched && taskForm.get('priority')?.hasError('required')">
+                Priority is required
+            </div>
         </div>
 
-        <!-- Status -->
-        <div class="col-12 col-md-4">
+
+        <!-- <div class="col-12 col-md-4">
             <label for="status" class="form-label fs-6">Status<span class="text-danger">*</span></label>
             <select id="status" class="form-select form-select-lg" formControlName="status">
                 <option value="Pending">Pending</option>
                 <option value="In Progress">In Progress</option>
                 <option value="Completed">Completed</option>
             </select>
-        </div>
 
-        <!-- Date -->
+            <div class="text-danger mt-1"
+                *ngIf="taskForm.get('status')?.touched && taskForm.get('status')?.hasError('required')">
+                Status is required
+            </div>
+        </div> -->
+
+
         <div class="col-12 col-md-4">
-            <label for="date" class="form-label fs-6">Date<span class="text-danger">*</span></label>
+            <label for="date" class="form-label fs-6">Due Date<span class="text-danger">*</span></label>
             <input id="date" type="date" class="form-control" formControlName="date" />
+            <div class="text-danger mt-1"
+                *ngIf="taskForm.get('date')?.touched && taskForm.get('date')?.hasError('required')">
+                Date is required
+            </div>
         </div>
 
-        <!-- Task Image -->
+
+
         <div class="col-12 col-md-6">
-            <label for="taskImage" class="form-label fs-6">Task Image<span class="text-danger">*</span></label>
+            <label for="taskImage" class="form-label fs-6">Task Image</label>
             <input id="taskImage" type="file" class="form-control" (change)="onFileChange($event)" />
         </div>
 
@@ -52,16 +76,10 @@
             <button class="btn btn-primary backbtn" type="button" (click)="backtoDashboard()">
                 Back
             </button>
-
-            @if (pageTitle === 'Add') {
-            <button class="btn btn-primary" type="submit" [disabled]="taskForm.invalid">
+            <button class="btn btn-primary" type="submit">
                 Submit
             </button>
-            } @else if (pageTitle === 'Edit') {
-            <button class="btn btn-success" type="button" [disabled]="taskForm.invalid" (click)="updateUserTask()">
-                Update
-            </button>
-            }
+
         </div>
     </form>
 </div>

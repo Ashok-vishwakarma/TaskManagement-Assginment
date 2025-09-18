@@ -9,11 +9,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
-
+import { CommonModule } from '@angular/common';
+import { HighlightOverDUEPipe } from '../../../core/highlight-over-due-pipe';
+import { BehaviorSubject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-dashboard',
-  imports: [TableModule, IconFieldModule, ReactiveFormsModule, InputIconModule, ButtonModule, RouterModule],
+  imports: [CommonModule, HighlightOverDUEPipe, TableModule, IconFieldModule, ReactiveFormsModule, InputIconModule, ButtonModule, RouterModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   standalone: true,
@@ -22,10 +24,12 @@ export class Dashboard implements OnInit {
 
   loading: boolean = false;
   customers!: Customer[];
-
+  acb!: Customer[];
+  filteredTasks!: Customer[];
   filterCustomer!: FormGroup;
   errorMessage: any = ''
-  filteredTasks!: Customer[];
+  search$ = new BehaviorSubject<string>('');
+  searchByTitle: any[] = [];
 
   constructor(private cds: CustomerData, private cdr: ChangeDetectorRef, private fb: FormBuilder, private route: Router) { }
 
@@ -38,6 +42,12 @@ export class Dashboard implements OnInit {
     })
 
     this.getUserData()
+
+    this.search$
+      .pipe(debounceTime(300))
+      .subscribe(value => {
+        this.applySearch(value);
+      });
   }
 
   filterCustomerFilterForm() {
@@ -48,7 +58,7 @@ export class Dashboard implements OnInit {
 
 
     const { priority, status } = this.filterCustomer.value;
-    this.filteredTasks = this.customers.filter(task => {
+    this.filteredTasks = this.acb.filter(task => {
       const matchPriority = priority ? task.priority === priority : true;
       const matchStatus = status ? task.status === status : true;
       return matchPriority && matchStatus;
@@ -62,12 +72,12 @@ export class Dashboard implements OnInit {
 
 
   getUserData() {
-    debugger
     this.loading = true
     this.cds.getTask().subscribe({
       next: (res: any) => {
         this.loading = false
         this.customers = res
+        this.acb = res
         console.log(res)
         this.cdr.detectChanges();
       },
@@ -80,13 +90,11 @@ export class Dashboard implements OnInit {
   }
 
 
-  customerTaskManagement(params: string, status: boolean, id: string) {
-    debugger
+  customerTaskManagement(params: string) {
+
     this.route.navigate(['/addDetails'], {
       queryParams: {
         value: params,
-        isDisable: status,
-        Id: id
       }
     })
   }
@@ -137,6 +145,53 @@ export class Dashboard implements OnInit {
 
   }
 
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Pending': return 'status-pending';
+      case 'Completed': return 'status-completed';
+      case 'In Progress': return 'status-inprogress';
+      default: return '';
+    }
+  }
+
+  getPriorityClass(status: string): string {
+
+    switch (status) {
+      case 'Medium': return 'status-inprogress';
+      case 'High': return 'status-pending';
+      case 'Low': return 'status-completed';
+      default: return '';
+    }
+  }
+
+  clear() {
+    this.filterCustomer.reset()
+    this.customers = [...this.acb]
+  }
+
+  applySearch(value: string) {
+    const searchTerm = value.toLowerCase();
+
+    if (!searchTerm) {
+      this.getUserData();
+      return;
+    }
+
+    this.searchByTitle = this.customers.filter(customer =>
+      customer.title && customer.title.toLowerCase().includes(searchTerm)
+    );
+
+    this.customers = [];
+    this.customers = this.searchByTitle
+    this.cdr.detectChanges();
+  }
+
+
+  onCustomSearch(event: any) {
+    const value = event.target.value;
+    this.search$.next(value);
+  }
 
 
 }
