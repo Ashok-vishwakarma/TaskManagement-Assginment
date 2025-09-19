@@ -76,8 +76,8 @@ export class Dashboard implements OnInit {
     this.cds.getTask().subscribe({
       next: (res: any) => {
         this.loading = false
-        this.customers = res
-        this.acb = res
+        this.customers = [...res].reverse();
+        this.acb = [...res].reverse();
         console.log(res)
         this.cdr.detectChanges();
       },
